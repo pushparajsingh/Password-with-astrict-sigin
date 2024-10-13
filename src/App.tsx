@@ -11,14 +11,12 @@ import FormControl from '@material-ui/core/FormControl';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
-// Define the types for the component's state
 interface AppState {
   password: string;
   astrickPassword: string;
   showPassword: boolean;
 }
 
-// Define the types for the props (if needed, otherwise it can be empty)
 interface AppProps {}
 
 class App extends React.Component<AppProps, AppState> {
@@ -41,14 +39,14 @@ class App extends React.Component<AppProps, AppState> {
         str: string,
         event: ChangeEvent<HTMLInputElement>
       ) => {
-        const inputData = (event.nativeEvent as InputEvent).data; // Cast nativeEvent to InputEvent
+        const inputData = (event.nativeEvent as InputEvent).data;
 
         if (inputData) {
           let updatedStr = str.split('');
           updatedStr.splice(
             event.target.selectionStart as number,
             0,
-            inputData // Access input data directly
+            inputData
           );
           return updatedStr.join('');
         } else {
@@ -61,7 +59,7 @@ class App extends React.Component<AppProps, AppState> {
       const createAsteriskMask = (str: string) =>
         '*'.repeat(str.length);
 
-      const updatedPassword = updatePassword(password, event); // No need to cast event to InputEvent
+      const updatedPassword = updatePassword(password, event);
 
       const shouldUseInputValue =
         inputValue.length !== updatedPassword.length &&
@@ -72,15 +70,14 @@ class App extends React.Component<AppProps, AppState> {
         : updatedPassword;
       const maskedPassword = createAsteriskMask(finalPassword);
 
-      // Explicitly construct the new state object
       this.setState(
         (prevState) =>
           ({
             ...prevState,
-            [prop]: finalPassword, // Dynamically set password
-            astrickPassword: maskedPassword, // Set asterisk-masked password
+            [prop]: finalPassword,
+            astrickPassword: maskedPassword,
           } as Pick<AppState, keyof AppState>)
-      ); // Ensure the state update matches AppState's structure
+      );
     };
 
   handleClickShowPassword = () => {
